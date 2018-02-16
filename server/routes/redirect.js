@@ -8,8 +8,8 @@ const Url = require('../models/url');
 /* Get short URL and redirect to original link */
 router.get('/', function(req, res, next) {
 
-    var base58Id = req.params.encoded_id;
-    var id = base58.decode(base58Id);
+    var shortUrl = req.params.short_url;
+    var id = base58.decode(shortUrl);
 
     // check if url already exists in database
     Url.findOne({_id: id}, function (err, doc){
