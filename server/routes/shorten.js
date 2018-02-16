@@ -1,11 +1,23 @@
 const express = require('express');
 const router = express.Router();
-
 const config = require('../config/config');
 const base58 = require('../utils/base58');
 const Url = require('../models/url');
+const { body, validationResult } = require('express-validator/check');
 
-router.post('/', function(req, res, next) {
+// Use express-validator module for validate and sanitize user request data
+router.post('/', [
+    body('url')
+    .isLength({min: 1}).withMessage('Please input your URL')
+    .trim()
+    .escape()
+], (req, res, next) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.json({error: true, result: errors.mapped().url.msg });
+    }
+    
     var longUrl = req.body.url;
     var shortUrl = '';
 
@@ -18,7 +30,7 @@ router.post('/', function(req, res, next) {
             shortUrl = config.webhost + base58.encode(doc._id);
 
             // since the document exists, return it without creating a new entry
-            res.json({'shortUrl': shortUrl});
+            res.json({result: shortUrl});
 
         } else {
 
@@ -35,7 +47,7 @@ router.post('/', function(req, res, next) {
                 // construct the short URL and return to user
                 shortUrl = config.webhost + base58.encode(newUrl._id);
 
-                res.json({'shortUrl': shortUrl});
+                res.json({result: shortUrl});
         });
 
         }
