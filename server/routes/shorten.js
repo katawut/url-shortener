@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } = require('express-validator/check');
+
 const config = require('../config/config');
 const base58 = require('../utils/base58');
 const Url = require('../models/url');
-const { body, validationResult } = require('express-validator/check');
+
 
 // Use express-validator module for validate and sanitize user request data
 router.post('/', [
@@ -13,6 +15,7 @@ router.post('/', [
     .escape()
 ], (req, res, next) => {
 
+    // if validation fail return error message to user
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.json({error: true, result: errors.mapped().url.msg });
@@ -30,7 +33,7 @@ router.post('/', [
             shortUrl = config.webhost + base58.encode(doc._id);
 
             // since the document exists, return it without creating a new entry
-            res.json({result: shortUrl});
+            return res.json({result: shortUrl});
 
         } else {
 
@@ -41,13 +44,14 @@ router.post('/', [
 
             newUrl.save(function(err) {
                 if (err){
-                console.log(err);
+                    console.log(err);
+                    return res.json({error: true, result: 'Create short URL failed.' });
                 }
 
                 // construct the short URL and return to user
                 shortUrl = config.webhost + base58.encode(newUrl._id);
 
-                res.json({result: shortUrl});
+                return res.json({result: shortUrl});
         });
 
         }
