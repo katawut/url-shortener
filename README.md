@@ -35,7 +35,7 @@ $ npm start
 - Secure HTTP Headers (used: [helmet] module).
   - Set Content Security Policy rules
   - Prevent clickjacking
-  - XSS Filter and encode input string to html entities before save to database
+  - XSS Filter
   - Prevent MIME Type sniffing
   - Disable Powered-By
 - Basic prevent DDOS attack or forever loop or too many requests from user (used: [ddos] module).
