@@ -16,7 +16,7 @@ $('.btn').on('click', function(e) {
                 if (data.error) {
                     resultHTML = '<p class="errorMsg">'+data.result+'</p>';
                 } else {
-                    resultHTML = '<strong>Your shorten url is:</strong> <a class="result" href="' + data.result + '">'
+                    resultHTML = '<strong>Your shorten url is:</strong> <a class="result" target="_blank" href="' + data.result + '">'
                 + data.result + '</a>';
                 }
                 
