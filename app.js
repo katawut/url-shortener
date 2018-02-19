@@ -3,11 +3,11 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-// module for security
+// modules for security
 const helmet = require('helmet');
 const Ddos = require('ddos');
 
-// application module
+// application modules
 const redirect = require('./server/routes/redirect');
 const shorten = require('./server/routes/shorten');
 const config = require('./server/config/config');
