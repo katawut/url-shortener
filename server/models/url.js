@@ -19,7 +19,8 @@ var urlSchema = new Schema({
 });
 
 // The pre('save', callback) middleware executes the callback function
-// every time before an entry is saved to the urls collection.
+// every time before an entry is saved to the urls collection. We use it because we need to update
+// global counter to use as uniqued id in urls collection
 urlSchema.pre('save', function(next){
     var doc = this;
     // find the url_count and increment it by 1
