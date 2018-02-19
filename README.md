@@ -20,14 +20,14 @@ Edit config.js for setup this app in your environment.
 $ server/config/config.js
 ```
 
-Run this script for seeding global counter for using in this app.
+Run this script for seeding global counter ID for using in this app.
 ```sh
 $ node scripts/seedDB.js
 ```
 
 Start the app server (server run on port 3000).
 ```sh
-$ node app.js
+$ npm start
 ```
 
 ## Security issues
@@ -35,13 +35,17 @@ $ node app.js
 - Secure HTTP Headers (used: [helmet] module).
   - Set Content Security Policy rules
   - Prevent clickjacking
-  - XSS Filter
+  - XSS Filter and encode input string to html entities before save to database
   - Prevent MIME Type sniffing
   - Disable Powered-By
-- Basic prevent DDOS attack or unfinished loop or too many requests from user (used: [ddos] module).
+- Basic prevent DDOS attack or forever loop or too many requests from user (used: [ddos] module).
 
 ## Scalability issues
-- 
+- Used incremental IDs as unique ID for quick insert and lookup in database.
+- Used Model-View-Controller concept in application for manageable code.
+
+## References
+reference source code: https://coligo.io/create-url-shortener-with-node-express-mongo/
 
 [ddos]: <https://www.npmjs.com/package/ddos>
 [express-validator]: <https://github.com/ctavan/express-validator>
